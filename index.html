@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semangat</title>
+    <title>Semangat Meli</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         body, html {
@@ -12,7 +12,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: linear-gradient(to bottom, #040114, #0b0521, #160a36);
+            background: linear-gradient(to bottom, #020202, #0d0202, #180303);
             font-family: sans-serif;
             touch-action: none;
             user-select: none;
@@ -57,7 +57,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             animation: pulse-glow 1.5s infinite alternate;
-            text-shadow: 0 0 10px #fff, 0 0 20px #ff00c8, 0 0 30px #9d00ff;
+            text-shadow: 0 0 10px #fff, 0 0 20px #ff0055, 0 0 30px #8b0000;
             font-weight: bold;
         }
 
@@ -69,7 +69,7 @@
         .pipe-svg {
             width: 55px;
             height: auto;
-            filter: drop-shadow(0 0 10px rgba(157, 0, 255, 0.5));
+            filter: drop-shadow(0 0 10px rgba(255, 0, 85, 0.6));
         }
     </style>
 </head>
@@ -83,15 +83,15 @@
         <svg class="pipe-svg" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <linearGradient id="pipeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#4a0080" />
-                    <stop offset="50%" stop-color="#9d00ff" />
-                    <stop offset="100%" stop-color="#4a0080" />
+                    <stop offset="0%" stop-color="#550011" />
+                    <stop offset="50%" stop-color="#ff0055" />
+                    <stop offset="100%" stop-color="#550011" />
                 </linearGradient>
             </defs>
-            <rect x="45" y="120" width="10" height="80" fill="#1b122b" />
-            <path d="M 20 120 C 20 80, 40 40, 50 10 C 60 40, 80 80, 80 120 Z" fill="url(#pipeGrad)" stroke="#ff00c8" stroke-width="2"/>
-            <line x1="35" y1="120" x2="50" y2="30" stroke="#ff00c8" stroke-width="1" opacity="0.6"/>
-            <line x1="65" y1="120" x2="50" y2="30" stroke="#ff00c8" stroke-width="1" opacity="0.6"/>
+            <rect x="45" y="120" width="10" height="80" fill="#1a0005" />
+            <path d="M 20 120 C 20 80, 40 40, 50 10 C 60 40, 80 80, 80 120 Z" fill="url(#pipeGrad)" stroke="#ff4d88" stroke-width="2"/>
+            <line x1="35" y1="120" x2="50" y2="30" stroke="#ff4d88" stroke-width="1" opacity="0.6"/>
+            <line x1="65" y1="120" x2="50" y2="30" stroke="#ff4d88" stroke-width="1" opacity="0.6"/>
         </svg>
     </div>
 
@@ -146,7 +146,7 @@
                             ctx.beginPath();
                             ctx.moveTo(star.x, star.y);
                             ctx.lineTo(stars[j].x, stars[j].y);
-                            ctx.strokeStyle = `rgba(180, 200, 255, ${0.12 - dist/750})`;
+                            ctx.strokeStyle = `rgba(255, 180, 200, ${0.12 - dist/750})`;
                             ctx.lineWidth = 0.5;
                             ctx.stroke();
                         }
@@ -157,7 +157,7 @@
 
         // --- PARTIKEL BEBAS ---
         let particles = [];
-        const baseColors = ['#9d00ff', '#ff00c8', '#ff8cff', '#ff0055', '#e0b0ff'];
+        const baseColors = ['#ff0055', '#ff3366', '#ff6699', '#cc0033', '#8b0000'];
 
         class Particle {
             constructor(x, y, isProjectile = false) {
@@ -217,25 +217,32 @@
             }
         }
 
-        // --- PARTIKEL POLA TULISAN & BUNGA ---
+        // --- PARTIKEL POLA ---
         let shapeParticles = [];
 
         class ShapeParticle {
-            constructor(tx, ty, isFlower = false) {
+            constructor(tx, ty, type) {
                 this.x = cw / 2 + (Math.random() - 0.5) * 100;
                 this.y = ch * 0.4 + (Math.random() - 0.5) * 100;
                 this.tx = tx;
                 this.ty = ty;
-                this.isFlower = isFlower;
+                this.type = type; 
                 
-                if (isFlower) {
-                    this.color = Math.random() > 0.5 ? '#6a0dad' : '#8a2be2'; 
-                    this.size = Math.random() * 1 + 0.5; 
-                    this.maxAlpha = Math.random() * 0.4 + 0.3; 
+                if (type === 'bg') {
+                    // Background sketsa bunga dibuat sangat lembut dan transparan
+                    this.color = '#ff3366';
+                    this.size = Math.random() * 1.0 + 0.5;
+                    this.maxAlpha = Math.random() * 0.22 + 0.1;
+                } else if (type === 'redjohn') {
+                    // Logo Red John warna merah darah pekat menyala
+                    this.color = Math.random() > 0.3 ? '#ff0000' : '#cc0000';
+                    this.size = Math.random() * 1.8 + 1.2;
+                    this.maxAlpha = 1;
                 } else {
-                    this.color = Math.random() > 0.3 ? '#ffffff' : '#ffb3ff'; 
-                    this.size = Math.random() * 1.5 + 1.2; 
-                    this.maxAlpha = 1; 
+                    // Teks "Semangat Meli" dibuat sangat tebal, besar, dan terang agar jelas di HP
+                    this.color = Math.random() > 0.3 ? '#ff99cc' : '#ff0066';
+                    this.size = Math.random() * 2.4 + 1.6;
+                    this.maxAlpha = 1;
                 }
                 
                 this.alpha = 0;
@@ -262,8 +269,8 @@
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fillStyle = this.color;
                 ctx.globalAlpha = this.alpha;
-                ctx.shadowBlur = this.isFlower ? 4 : 12;
-                ctx.shadowColor = this.isFlower ? this.color : '#ff00c8';
+                ctx.shadowBlur = this.type === 'bg' ? 1 : 18;
+                ctx.shadowColor = this.type === 'redjohn' ? '#ff0000' : (this.type === 'bg' ? '#ff3366' : '#ff0055');
                 ctx.fill();
                 ctx.shadowBlur = 0;
                 ctx.globalAlpha = 1;
@@ -273,107 +280,130 @@
         function generateShapePoints() {
             shapeParticles = [];
             
-            let scale = cw < 768 ? 0.55 : 1;
-            let flowerRadius = 220 * scale; 
+            let isMobile = cw < 768;
+            let scale = isMobile ? (cw / 360) : 1; 
             let centerX = cw / 2;
             let centerY = ch * 0.45;
 
-            // 1. Siluet Bunga Utama (Background Ungu)
-            const numPetals = 8;
-            for (let p = 0; p < numPetals; p++) {
-                let petalAngle = (p * Math.PI * 2) / numPetals;
-                for (let t = 0; t <= Math.PI; t += 0.04) {
-                    let r = flowerRadius * Math.sin(2.5 * t) * Math.sin(t);
-                    let xOffset = r * Math.cos(petalAngle + t * 0.5);
-                    let yOffset = r * Math.sin(petalAngle + t * 0.5);
-                    
-                    shapeParticles.push(new ShapeParticle(centerX + xOffset, centerY + yOffset, true));
-                }
-            }
-
-            // 2. Teks dan Sketsa Mawar Kecil
             const tempCanvas = document.createElement('canvas');
             const tempCtx = tempCanvas.getContext('2d');
             tempCanvas.width = cw;
             tempCanvas.height = ch;
 
-            let fontSize = cw < 480 ? 60 : (cw < 768 ? 80 : 130); 
+            // 1. SKETSA BUNGA (Background diperbesar radiusnya agar melingkupi luar teks)
+            let flowerRadius = 240 * scale;
+            tempCtx.strokeStyle = '#ffffff';
+            tempCtx.lineWidth = 2;
+            
+            tempCtx.beginPath();
+            tempCtx.arc(centerX, centerY, flowerRadius * 0.35, 0, Math.PI * 2);
+            tempCtx.stroke();
+
+            const numPetals = 28;
+            for (let i = 0; i < numPetals; i++) {
+                let angle = (i * Math.PI * 2) / numPetals;
+                tempCtx.save();
+                tempCtx.translate(centerX, centerY);
+                tempCtx.rotate(angle);
+                tempCtx.beginPath();
+                tempCtx.moveTo(0, -flowerRadius * 0.35);
+                tempCtx.quadraticCurveTo(flowerRadius * 0.15, -flowerRadius * 0.7, 0, -flowerRadius);
+                tempCtx.quadraticCurveTo(-flowerRadius * 0.15, -flowerRadius * 0.7, 0, -flowerRadius * 0.35);
+                tempCtx.stroke();
+                tempCtx.restore();
+            }
+
+            let flowerImgData = tempCtx.getImageData(0, 0, cw, ch);
+            let stepBg = isMobile ? 5 : 6; 
+            for (let y = 0; y < ch; y += stepBg) {
+                for (let x = 0; x < cw; x += stepBg) {
+                    let index = (y * cw + x) * 4;
+                    if (flowerImgData.data[index + 3] > 128) {
+                        shapeParticles.push(new ShapeParticle(x, y, 'bg'));
+                    }
+                }
+            }
+
+            // Bersihkan temporary canvas
+            tempCtx.clearRect(0, 0, cw, ch);
+
+            // 2. LOGO RED JOHN (Diposisikan di atas tulisan)
+            let radius = 60 * scale; 
+            let smileCenterY = centerY - (isMobile ? 140 : 160); 
+
+            tempCtx.strokeStyle = '#ffffff';
+            tempCtx.lineWidth = 6 * scale;
+            tempCtx.lineCap = 'round';
+            tempCtx.lineJoin = 'round';
+
+            tempCtx.beginPath();
+            tempCtx.arc(centerX, smileCenterY, radius, Math.PI * 0.2, Math.PI * 1.9, false);
+            tempCtx.stroke();
+
+            tempCtx.beginPath();
+            tempCtx.moveTo(centerX - radius * 0.4, smileCenterY - radius * 0.25);
+            tempCtx.quadraticCurveTo(centerX - radius * 0.25, smileCenterY - radius * 0.12, centerX - radius * 0.1, smileCenterY - radius * 0.22);
+            tempCtx.stroke();
+
+            tempCtx.beginPath();
+            tempCtx.moveTo(centerX + radius * 0.1, smileCenterY - radius * 0.22);
+            tempCtx.quadraticCurveTo(centerX + radius * 0.25, smileCenterY - radius * 0.12, centerX + radius * 0.4, smileCenterY - radius * 0.25);
+            tempCtx.stroke();
+
+            tempCtx.beginPath();
+            tempCtx.arc(centerX, smileCenterY + radius * 0.05, radius * 0.42, Math.PI * 0.15, Math.PI * 0.85, false);
+            tempCtx.stroke();
+
+            tempCtx.lineWidth = 3 * scale;
+            let drips = [
+                {x: centerX - radius * 0.22, y: smileCenterY - radius * 0.15, len: radius * 0.75},
+                {x: centerX + radius * 0.22, y: smileCenterY - radius * 0.15, len: radius * 0.9},
+                {x: centerX - radius * 0.15, y: smileCenterY + radius * 0.42, len: radius * 0.55},
+                {x: centerX, y: smileCenterY + radius * 0.46, len: radius * 0.8},
+                {x: centerX + radius * 0.18, y: smileCenterY + radius * 0.43, len: radius * 1.1}
+            ];
+            drips.forEach(d => {
+                tempCtx.beginPath();
+                tempCtx.moveTo(d.x, d.y);
+                tempCtx.lineTo(d.x, d.y + d.len);
+                tempCtx.stroke();
+            });
+
+            let redJohnImgData = tempCtx.getImageData(0, 0, cw, ch);
+            let stepRedJohn = isMobile ? 2 : 3;
+            for (let y = 0; y < ch; y += stepRedJohn) {
+                for (let x = 0; x < cw; x += stepRedJohn) {
+                    let index = (y * cw + x) * 4;
+                    if (redJohnImgData.data[index + 3] > 128) {
+                        shapeParticles.push(new ShapeParticle(x, y, 'redjohn'));
+                    }
+                }
+            }
+
+            // Bersihkan temporary canvas
+            tempCtx.clearRect(0, 0, cw, ch);
+
+            // 3. TULISAN "Semangat Meli" (Dibuat sangat besar dan tebal khusus layar HP)
+            let fontSize = isMobile ? 54 : 90; 
             tempCtx.font = `bold ${fontSize}px 'Dancing Script', cursive`;
             tempCtx.fillStyle = '#ffffff';
             tempCtx.textAlign = 'center';
             tempCtx.textBaseline = 'middle';
 
-            let lineSpacing = fontSize * 0.85; 
-            let textY1 = centerY - (lineSpacing / 2);
-            let textY2 = centerY + (lineSpacing / 2);
+            let lineSpacing = fontSize * 1.1; 
+            let textY1 = centerY + (isMobile ? 20 : 25); 
+            let textY2 = textY1 + lineSpacing;
 
-            // Tulis Teksnya
             tempCtx.fillText("Semangat", centerX, textY1);
-            tempCtx.fillText("Viola", centerX, textY2);
+            tempCtx.fillText("Meli", centerX, textY2);
 
-            // Menghitung letak sumbu X dari 'e' dan 't'
-            let fullWidth = tempCtx.measureText("Semangat").width;
-            let startX = centerX - (fullWidth / 2); 
-
-            let w_S = tempCtx.measureText("S").width;
-            let w_Se = tempCtx.measureText("Se").width;
-            let x_e = startX + w_S + ((w_Se - w_S) / 2) - (fontSize * 0.05); 
-
-            let w_Semanga = tempCtx.measureText("Semanga").width;
-            let w_Semangat = tempCtx.measureText("Semangat").width;
-            let x_t = startX + w_Semanga + ((w_Semangat - w_Semanga) / 2); 
-
-            // POSISI Y DIBUAT LEBIH KE BAWAH AGAR TIDAK MENEMPEL (Gives Clear Gap)
-            let y_flower = textY1 + (fontSize * 0.75); 
-            let mawarSize = fontSize * 0.22; // Ukuran bunga mawar disesuaikan
-
-            // Fungsi Untuk Menggambar Sketsa Bunga Mawar
-            function drawRoseSketch(ctx, cx, cy, radius) {
-                ctx.strokeStyle = '#ffffff';
-                ctx.lineWidth = Math.max(3, radius * 0.15); // Ketebalan garis sketsa
-                ctx.lineCap = 'round';
-                
-                // Menggambar kelopak dalam (spiral)
-                ctx.beginPath();
-                for (let i = 0; i <= Math.PI * 3.5; i += 0.2) {
-                    let r = (i / (Math.PI * 3.5)) * (radius * 0.5);
-                    let px = cx + Math.cos(i) * r;
-                    let py = cy + Math.sin(i) * r;
-                    if (i === 0) ctx.moveTo(px, py);
-                    else ctx.lineTo(px, py);
-                }
-                ctx.stroke();
-
-                // Menggambar kelopak luar (lengkungan terpisah)
-                ctx.beginPath();
-                ctx.arc(cx - radius*0.1, cy + radius*0.1, radius * 0.7, Math.PI * 0.1, Math.PI * 0.8);
-                ctx.stroke();
-                
-                ctx.beginPath();
-                ctx.arc(cx + radius*0.1, cy - radius*0.1, radius * 0.8, Math.PI * 1.1, Math.PI * 1.8);
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.arc(cx - radius*0.2, cy - radius*0.1, radius * 0.75, Math.PI * 0.6, Math.PI * 1.3);
-                ctx.stroke();
-                
-                ctx.beginPath();
-                ctx.arc(cx + radius*0.1, cy + radius*0.1, radius * 0.85, Math.PI * 1.7, Math.PI * 0.3);
-                ctx.stroke();
-            }
-
-            // Gambar sketsa mawar persis di bawah 'e' dan 't' yang sudah diberi jarak
-            drawRoseSketch(tempCtx, x_e, y_flower, mawarSize);
-            drawRoseSketch(tempCtx, x_t, y_flower, mawarSize);
-
-            // 3. Ekstrak Semua Piksel Menjadi Partikel Api
-            const imgData = tempCtx.getImageData(0, 0, cw, ch);
-            const step = cw < 768 ? 4 : 6; 
-            for (let y = 0; y < ch; y += step) {
-                for (let x = 0; x < cw; x += step) {
+            const textImgData = tempCtx.getImageData(0, 0, cw, ch);
+            let stepText = isMobile ? 2 : 3; // Kerapatan tinggi agar teks sangat padat dan terbaca jelas
+            for (let y = 0; y < ch; y += stepText) {
+                for (let x = 0; x < cw; x += stepText) {
                     let index = (y * cw + x) * 4;
-                    if (imgData.data[index + 3] > 128) { 
-                        shapeParticles.push(new ShapeParticle(x, y, false));
+                    if (textImgData.data[index + 3] > 128) { 
+                        shapeParticles.push(new ShapeParticle(x, y, 'text'));
                     }
                 }
             }
